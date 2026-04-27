@@ -95,9 +95,9 @@ r2p11_clicked_correct = (item) => {
     for (let i = 0; i < 14; i++) {
         setTimeout(() => {
             if (item.attr("src").includes("light_on")) {
-                item.attr("src", "assets/media/exer7/exer07_light_off.svg");
+                item.attr("src", "exer7/exer07_light_off.svg");
             } else {
-                item.attr("src", "assets/media/exer7/exer07_light_on.svg");
+                item.attr("src", "exer7/exer07_light_on.svg");
             };
           }, i * 200);
     }
@@ -236,7 +236,7 @@ restart_2 = () => {
 
     // r2p13
     restart_trash_drag("r2p13");
-    $("#r2p13 .data-num-3.drag-2").attr("src", `assets/media/exer3/exer3_bikurofe.svg`);
+    $("#r2p13 .data-num-3.drag-2").attr("src", `exer3/exer3_bikurofe.svg`);
 
     // r2p16
     // switch_class($("#r2p16 .item"), "hidden", "visible");
