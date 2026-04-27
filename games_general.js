@@ -1,577 +1,1180 @@
-// life
-var nLife = 3;
+// there are 4 options: 1, 2, 3, 4 (waiting room, therapy room, doctor's room and medicines room)
+// the variable changes when clicking on one of the rooms buttons in the opening
+// there are 4 arrays- one for each room 
+var nRoom = 0;
+var nPage = 0;
 
-// feedback arrays
-let correct_num = 0;
-let incorrect_num = 0;
-var arr_correct_feedback = ["תותח!", "תותחן!", "אש!", "א' ניצחונות!", "מורעלים!", "פגז!", "סמל לשלמות", "אלופים!", "רב אלופים!", "קודקוד!", "לוחמים!"];
-var arr_incorrect_feedback = ["איזה לוזר!", 'דו"ח!', "חדלו!", 'ש"צצצצצ', "מחבוש!", "יא צעירים", "שוקיסטים", "יא חפשנים", "יא שבוזים", 'מסמ"רי שיער', 'ריח של בקו"ם', "טירונים", "תת-עלובים"];
-
-// timer
-let b_timer = true;
-
-// setting game page
-type_game = () => {
-    // hide controls
-    switch_class($("#controls"), "flex" ,"none");
-    switch_class($(`#lesson-map-${nRoom}`), "flex" ,"none");
-  
-    if (matrix[nRoom][nPage].timer !== undefined) {
-        // display timer
-        switch_class($("#timer"), "none", "block");
-        b_timer = true;
-        // reset timeline
-        $("#time-timeline").css({"object-position": "40% 0", "animation-duration" : matrix[nRoom][nPage].timer});
+// waiting room
+var Arr_1 = [
+  {
+    // opening game question- page 1
+    divName: ["r1p1"],
+    functions: [`switch_class($("#back-button"), "visible", "hidden")`, `pop_buttons($("#next-button"), 1)`, "pop_watch_room_button()", "pop_home_page_button()", "pop_restart_button()", "pop_quiz_button()", "pop_attach()", "pop_home_button()"],
+    type: "content",
+    topic: 1
+  },
+  {
+    // page 2
+    divName: ["r1p2"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`, `pop_buttons($("#back-button"), -1)`],
+    type: "content",
+    topic: 2
+  },
+  {
+    // first game- page 3
+    divName: ["r1p3"],
+    functions: ["pop_timeEnds()", "pop_click()", "pop_hover_down()"],
+    type: "game",
+    timer: "10s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "התבלבלתי ותליתי את כל השלטים מחוץ למרפאה!<br>לחצו על השלטים שאמורים להיות בפנים",
+    instructions_feedback: {
+      correct: "אתם שולטים על השלטים!",
+      incorrect: "חבל שתליית השלטים תלוייה בכם..."
     }
-    $(`#${matrix[nRoom][nPage].divName} .instructions`).html(matrix[nRoom][nPage].instructions);
+  },
+  {
+    // page 4
+    divName: ["r1p4"],
+    functions: [],
+    type: "content",
+    topic: 3
+  },
+  {
+    // page 5
+    divName: ["r1p5"],
+    functions: [],
+    type: "content"
+  },
+  {
+    // page 6
+    divName: ["r1p6"],
+    functions: [],
+    type: "content"
+  },
+  {
+    // second game- page 7
+    divName: ["r1p7"],
+    functions: ["pop_hover_down()", "pop_drag_drop()"],
+    type: "game",
+    timer: "60s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "בבקשה עזרו לי לגרור את המודעה ללוח הנכון",
+    instructions_feedback: {
+      correct: "מזל שהמשימה הייתה תלוייה בכם",
+      incorrect: "יא חסרי מודעות..."
+    }
+  },
+  {
+    // page 8
+    divName: ["r1p8"],
+    functions: [],
+    type: "content",
+    topic: 4
+  },
+  {
+    // page 9
+    divName: ["r1p9"],
+    functions: [],
+    type: "content"
+  },
+  {
+    // third game- page 10
+    divName: ["r1p10"],
+    functions: ["pop_hover_down()", "pop_drag_drop()"],
+    type: "game",
+    timer: "60s",
+    feedback: {
+      correct: "שלב בוס!",
+      incorrect: "שלב בוס!"
+    },
+    instructions: "עזרו לי ליצור אוגדן לחדר קבלה! גררו את הדפים הנחוצים לאוגדן ואת השאר לפח",
+    instructions_feedback: {
+      correct: "אוגדן של קפדן!",
+      incorrect: "אוגדן של מפסידן..."
+    }
+  },
+  {
+    // question 1- page 11
+    divName: ["q1"],
+    functions: [`first_question()`, `switch_class($("#next-button"), "hidden", "visible")`, `switch_class($("#back-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 2- page 12
+    divName: ["q2"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 3- page 13
+    divName: ["q3"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 4- page 14
+    divName: ["q4"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 5- page 15
+    divName: ["q5"],
+    functions: [`switch_class($("#next-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 6- page 16
+    divName: ["q6"],
+    functions: [`switch_class($("#next-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  }
+];
+
+// therapy room
+var Arr_2 = [
+  {
+    // opening game question- page 1
+    divName: ["r2p1"],
+    functions: [`switch_class($("#back-button"), "visible", "hidden")`],
+    type: "content",
+    topic: 1
+  },
+  {
+    // first game- page 2
+    divName: ["r2p2"],
+    functions: ["pop_r2p2_slider()", `enter("slider")`],
+    type: "game",
+    timer: "10s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "גדי חייל בסדיר, תור (למקרה לא דחוף) הוא רוצה להסדיר.<br>גררו את הסמן כדי לבחור את הזמן, והקישו על ENTER כדי שהתור יוזמן.",
+    instructions_feedback: {
+      correct: "חבל על הזמן!",
+      incorrect: "חבל על הזמן..."
+    }
+  },
+  {
+    // page 3
+    divName: ["r2p3"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`],
+    type: "content",
+    topic: 2
+  },
+  {
+    // second game- page 4
+    divName: ["r2p4"],
+    functions: [`pop_build_mat()`, `falling_items(21)`],
+    type: "game",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "שלטו באמצעות החצים במקלדת<br>לאיזה פח הפסולת אמורה לרדת",
+    instructions_feedback: {
+      correct: "אתם חדים כמו מחט!",
+      incorrect: "עבודה פח..."
+    }
+  },
+  {
+    // page 5
+    divName: ["r2p5"],
+    functions: [],
+    type: "content",
+    topic: 3
+  },
+  {
+    // page 6
+    divName: ["r2p6"],
+    functions: [],
+    type: "content",
+    topic: 4
+  },
+  {
+    // page 7
+    divName: ["r2p7"],
+    functions: [],
+    type: "content",
+    topic: 5
+  },
+  {
+    // third game- page 8
+    divName: ["r2p8"],
+    functions: ["pop_hover_down()", "pop_drag_drop()"],
+    type: "game",
+    timer: "60s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "בבקשה עזרו לי לגרור את השלט למקום הנכון",
+    instructions_feedback: {
+      correct: "הכל מוכן למסדר המפקד!",
+      incorrect: "מזל שאין מסדר היום..."
+    }
+  },
+  {
+    // page 9
+    divName: ["r2p9"],
+    functions: [],
+    type: "content",
+    topic: 6
+  },
+  {
+    // page 10
+    divName: ["r2p10"],
+    functions: [],
+    type: "content",
+    topic: 7
+  },
+  {
+    // forth game- page 11
+    divName: ["r2p11"],
+    functions: ["pop_click()"],
+    type: "game",
+    timer: "5s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "לחצו על נורית החיווי כדי להפעיל אותה!",
+    instructions_feedback: {
+      correct: "אתם זוהרים כמו נורה!",
+      incorrect: "כנראה שאתם שייכים ל-dark side"
+    }
+  },
+  {
+    // page 12
+    divName: ["r2p12"],
+    functions: [],
+    type: "content",
+    topic: 8
+  },
+  {
+    // fifth game- page 13
+    divName: ["r2p13"],
+    functions: ["pop_hover_down()", "pop_drag_drop()"],
+    type: "game",
+    timer: "60s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "עזרו לי ליצור אוגדן לעמדת המעבדה! גררו את הדפים הנחוצים לאוגדן ואת השאר לפח",
+    instructions_feedback: {
+      correct: "אוגדן של קפדן!",
+      incorrect: "אוגדן של מפסידן..."
+    }
+  },
+  {
+    // page 14
+    divName: ["r2p14"],
+    functions: [],
+    type: "content",
+    topic: 9
+  },
+  {
+    // page 15
+    divName: ["r2p15"],
+    functions: [],
+    type: "content",
+    topic: 10
+  },
+  {
+    // page 17
+    divName: ["r2p16"],
+    functions: [],
+    type: "content",
+    topic: 11
+  },
+  {
+    // seventh game- page 18
+    divName: ["r2p17"],
+    functions: ["pop_click()"],
+    type: "game",
+    timer: "7s",
+    feedback: {
+      correct: "שלב בוס!",
+      incorrect: "שלב בוס!"
+    },
+    instructions: "איזו תרופה משולטת נכון?",
+    instructions_feedback: {
+      correct: "אתם שולטים על השלטים!",
+      incorrect: "אל תילחצו שלא לחצתם נכון :)"
+    }
+  },
+  {
+    // question 1- page 19
+    divName: ["q1"],
+    functions: [`first_question()`, `switch_class($("#next-button"), "hidden", "visible")`, `switch_class($("#back-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 2- page 20
+    divName: ["q2"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 3- page 21
+    divName: ["q3"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 4- page 22
+    divName: ["q4"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 5- page 23
+    divName: ["q5"],
+    functions: [`switch_class($("#next-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 6- page 24
+    divName: ["q6"],
+    functions: [`switch_class($("#next-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  }
+];
+
+// doctor's room
+var Arr_3 = [  
+  {
+    // room 3 page 1
+    divName: ["r3p1"],
+    functions: [`switch_class($("#back-button"), "visible", "hidden")`],
+    type: "content",
+    topic: 1
+  },
+  {
+    // room 3 page 2
+    divName: ["r3p2"],
+    functions: [`pop_click()`],
+    type: "game",
+    timer: "7s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "הרופא שכח לקחת את החותמת הביתה... תוכלו למצוא אותה?",
+    instructions_feedback: {
+      correct: "תחתמו קבע!",
+      incorrect: "אתם מבולבלים... תחתמו חופש!"
+    }
+  },
+  {
+    // room 3 page 3
+    divName: ["r3p3"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`],
+    type: "content",
+    topic: 2
+  },
+  {
+    // room 3 page 4
+    divName: ["r3p4"],
+    functions: [`pop_click()`],
+    type: "game",
+    timer: "20s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "מצא את ההבדלים בין החדרים!",
+    instructions_feedback: {
+      correct: "ראייה 6-6! יכולתם להיות צלפים!",
+      incorrect: "מזל שאנחנו בחדר רופא תקבעו תור לרופא עיניים!"
+    }
+  },
+  {
+    // room 3 page 5
+    divName: ["r3p5"],
+    functions: [],
+    type: "content",
+    topic: 3
+  },
+  {
+    // room 3 page 6
+    divName: ["r3p6"],
+    functions: [],
+    type: "content",
+    topic: 4
+  },
+  {
+    // room 3 page 7
+    divName: ["r3p7"],
+    functions: [],
+    type: "content",
+  },
+  {
+    // room 3 page 8
+    divName: ["r3p8"],
+    functions: [],
+    type: "content",
+    topic: 5
+  },
+  {
+    // room 3 page 9
+    divName: ["r3p9"],
+    functions: [`pop_r3p9_input()`],
+    type: "game",
+    timer: "10s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: `רשמו את השם המלא של הד"ר על השלט של הדלת!`,
+    instructions_feedback: {
+      correct: "אתה כוכב כמו עוז זהבי",
+      incorrect: "חבל על הזמן..."
+    }
+  },
+  {
+    // room 3 page 10
+    divName: ["r3p10"],
+    functions: [],
+    type: "content",
+    topic: 6
+  },
+  {
+    // room 3 page 11
+    divName: ["r3p11"],
+    functions: [],
+    type: "content",
+  },
+  {
+    // room 3 page 12
+    divName: ["r3p12"],
+    functions: [`pop_drag_drop()`, `pop_hover_down()`, `pop_carousel()`, `$(".arrows").on("click", pop_carousel)`, `pop_down()`],
+    type: "game",
+    timer: "30s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "איזה טופס חסר? עברו בין הטפסים וגררו את הנכון למקום!",
+    instructions_feedback: {
+      correct: "אתם טיפוס מוצלח!",
+      incorrect: "אין לכם טפיסה מהירה אה..."
+    }
+  },
+  {
+    // room 3 page 13
+    divName: ["r3p13"],
+    functions: [],
+    type: "content",
+    topic: 7
+  },
+  {
+    // question 1- page 13
+    divName: ["q1"],
+    functions: [`first_question()`, `switch_class($("#next-button"), "hidden", "visible")`, `switch_class($("#back-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 2- page 14
+    divName: ["q2"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 3- page 15
+    divName: ["q3"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 4- page 16
+    divName: ["q4"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 5- page 17
+    divName: ["q5"],
+    functions: [`switch_class($("#next-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 6- page 18
+    divName: ["q6"],
+    functions: [`switch_class($("#next-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  }
+];
+
+// medicines room
+var Arr_4 = [
+  {
+    // page 1
+    divName: ["r4p1"],
+    functions: [`switch_class($("#back-button"), "visible", "hidden")`],
+    type: "content",
+    topic: 1
+  },
+  {
+    // first game- page 2
+    divName: ["r4p2"],
+    functions: [`pop_click()`],
+    type: "game",
+    timer: "5s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "תעשו טובה תדליקו מזגן",
+    instructions_feedback: {
+      correct: "חיממתם לי את הלב",
+      incorrect: "אתם לא מדליקים"
+    }
+  },
+  {
+    // page 3
+    divName: ["r4p3"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`],
+    type: "content",
+    topic: 2
+  },
+  {
+    // page 4
+    divName: ["r4p4"],
+    functions: [],
+    type: "content",
+    topic: 3
+  },
+  {
+    // second game- page 5
+    divName: ["r4p5"],
+    functions: ["pop_hover_down()", "pop_drag_drop()"],
+    type: "game",
+    timer: "60s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "גררו למקום כל שלט- אך האם לארון או לדלת?",
+    instructions_feedback: {
+      correct: "הכל מוכן למסדר המפקד!",
+      incorrect: "מזל שאין מסדר היום..."
+    }
+  },
+  {
+    // page 6
+    divName: ["r4p6"],
+    functions: [],
+    type: "content",
+    topic: 4
+  },
+  {
+    // third game- page 7
+    divName: ["r4p7"],
+    functions: [`pop_build_mat()`, `falling_items(11)`],
+    type: "game",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "התרופות נופלות! כוונו אותן ימינה ושמאלה לפי הסוגים שלהן באמצעות המקלדת",
+    instructions_feedback: {
+      correct: "אתם יודעים לכוון!",
+      incorrect: "אתם לא יודעים לכוון..."
+    }
+  },
+  {
+    // page 8
+    divName: ["r4p8"],
+    functions: [],
+    type: "content",
+    topic: 5
+  },
+  {
+    // page 9
+    divName: ["r4p9"],
+    functions: [],
+    type: "content",
+    topic: 6
+  },
+  {
+    // page 10
+    divName: ["r4p10"],
+    functions: [],
+    type: "content"
+  },
+  {
+    // forth game- page 11
+    divName: ["r4p11"],
+    functions: ["pop_click()", "pop_hover_down()"],
+    type: "game",
+    timer: "10s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "לחצו על הטופס שלא אמור להיות בחדר תרופות!",
+    instructions_feedback: {
+      correct: "אתם שולטים על השלטים!",
+      incorrect: "חבל שתליית השלטים תלוייה בכם..."
+    }
+  },
+  {
+    // page 12
+    divName: ["r4p12"],
+    functions: [],
+    type: "content",
+    topic: 7
+  },
+  {
+    // page 13
+    divName: ["r4p13"],
+    functions: [],
+    type: "content",
+    topic: 8
+  },
+  {
+    // fifth game- page 14
+    divName: ["r4p14"],
+    functions: [`pop_hover_down()`, `pop_carousel()`, `enter("carousel")`],
+    type: "game",
+    timer: "60s",
+    feedback: {
+      correct: "array",
+      incorrect: "פגי תוקף"
+    },
+    instructions: "מלאו את הטבלה לפני שפג זמנכם, והקישו ENTER כדי לבדוק את עצמכם",
+    instructions_feedback: {
+      correct: "תיקפתם את הטבלה!",
+      incorrect: "פג הזמן!"
+    }
+  },
+  {
+    // page 15
+    divName: ["r4p15"],
+    functions: [],
+    type: "content",
+    topic: 9
+  },
+  {
+    // page 15
+    divName: ["r4p16"],
+    functions: [],
+    type: "content",
+    topic: 10
+  },
+  {
+    // sixth game- page 17
+    divName: ["r4p17"],
+    functions: ["pop_drag_drop()"],
+    type: "game",
+    timer: "7s",
+    feedback: {
+      correct: "שני ארונות",
+      incorrect: "array"
+    },
+    instructions: "תנעל ת'ארון",
+    instructions_feedback: {
+      correct: "זה המפתח להצלחה!",
+      incorrect: "אתם לא נעולים על זה..."
+    }
+  },
+  {
+    // page 18
+    divName: ["r4p18"],
+    functions: [],
+    type: "content",
+    topic: 11
+  },
+  {
+    // seventh game- page 19
+    divName: ["r4p19"],
+    functions: ["pop_r4p19_slider()", `enter("slider")`, "r4p19_slider_move()"],
+    type: "game",
+    timer: "7s",
+    feedback: {
+      correct: "array",
+      incorrect: "array"
+    },
+    instructions: "המקרר השתגע!<br>הקישו ENTER כאשר המדחום מגיע לטמפרטורה הנכונה",
+    instructions_feedback: {
+      correct: "חיממתם לי את הלב",
+      incorrect: "חמומי מוח"
+    }
+  },
+  {
+    // page 20
+    divName: ["r4p20"],
+    functions: [],
+    type: "content",
+    topic: 12
+  },
+  {
+    // page 21
+    divName: ["r4p21"],
+    functions: [],
+    type: "content",
+    topic: 13
+  }, 
+  {
+    // question 1- page 22
+    divName: ["q1"],
+    functions: [`first_question()`, `switch_class($("#next-button"), "hidden", "visible")`, `switch_class($("#back-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 2- page 23
+    divName: ["q2"],
+    functions: [`switch_class($("#back-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 3- page 24
+    divName: ["q3"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 4- page 25
+    divName: ["q4"],
+    functions: [],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 5- page 26
+    divName: ["q5"],
+    functions: [`switch_class($("#next-button"), "hidden", "visible")`],
+    type: "quiz",
+    questionType: "finish"
+  },
+  {
+    // question 6- page 27
+    divName: ["q6"],
+    functions: [`switch_class($("#next-button"), "visible", "hidden")`],
+    type: "quiz",
+    questionType: "finish"
+  }
+];
+
+var matrix = [[
+  {
+    // opening- page 0
+    divName: ["opening"], // the last div contains the speech bubble
+    functions: ['pop_room_buttons($("#room-button-1"))', 'pop_buttons($("#about-button"), 1)', "pop_calculateStrokeTextCSS(16)"] // array of functions that are needed to the page. If the functions contain the word "pop", it will happen only once and will be popped out of the array afterwards
+  },
+  {
+    // about- page 1
+    divName: ["about"],
+    functions: ['pop_buttons($("#back-about-button"), -1)']
+  }
+], Arr_1.slice(), Arr_2.slice(), Arr_3.slice(), Arr_4.slice()];
+
+// lesson map
+// what topic is the user currently learning
+var topic_counter = 1;
+// the distance between each circle in the lesson map (for the head movement)- different for each room 
+var topic_distance = 4;
+
+$(function() {
+  // calls the opening page
+  movePage();
+});
+
+function movePage() {
+  // appearance
+  // shows current divs
+  for (let i = 0; i < matrix[nRoom][nPage].divName.length; i++) {
+    $("#" + matrix[nRoom][nPage].divName[i]).css("display", "block");
+  }
+ 
+  // functions
+  // calls the functions of the page
+  if (matrix[nRoom][nPage].functions.length > 0) {
+    let nFunction = 0;
+    while (nFunction < matrix[nRoom][nPage].functions.length) {
+      eval(matrix[nRoom][nPage].functions[nFunction]);
+      // functions that contains the word "pop" will accur only once
+      if (matrix[nRoom][nPage].functions[nFunction].includes("pop")) {
+        matrix[nRoom][nPage].functions.splice(nFunction , 1);
+        // since the function happens only once there is no need in adding nFunction +1
+      } else {
+        nFunction++;
+      }
+    }
+  }
+
+  if (matrix[nRoom][nPage].type !== undefined) {
+    // identify type
+    eval(`type_${matrix[nRoom][nPage].type}()`);
+  }
 }
 
-endingGame = (condition) => {
-    let comment;
-    let heart_img;
-    let delay = 2000;
-    // the user wins/loses
-    if (condition) {
-        comment = "correct";
-        heart_img= "happy";
-    } else {
-        comment = "incorrect";
-        heart_img= "sad";
+function hidePage() {
+    // hides last divs
+    for (let i = 0; i < matrix[nRoom][nPage].divName.length; i++) {
+      $("#" + matrix[nRoom][nPage].divName[i]).css("display", "none");
     }
+    // changing checkpoint in lesson map
+    // if the topic changes whem moving page (there are pages with the same topic)
+    // after a game the topic is equal to the content topic and there is no need to change
+    // if (matrix[nRoom][nPage].topic !== undefined) {
+    // }
+}
 
+// function that adds events listeners to room buttons that displays the chosen room- called only one time for each button
+function pop_room_buttons(button) {
+  // changing button appearance
+  switch_class(button, "enabled", "abled");
+  button.on("click", function() {
+    // hides last divs
     hidePage();
-    checkpoint(condition);
-    // hide back and prev
-    switch_class($("#controls .control-button"), "visible", "hidden");
-    $(".topic").css("pointer-events", "none");
-    // display end-game general page
-    $(`#ending-game`).css("display", "block");
-    switch_class($("#spinning-flex"), "none", "flex");
-
-    // hearts
-    switch_class($(`#hearts-flex`), "none", "flex");
-    // heart images- switch from happy to sad and the opposite
-    if ($(`#heart-1 .heart`).attr("src") !== `heart/heart1_${heart_img}.svg`) {
-        for (let i = 1; i <= nLife ; i++) {
-            $(`#heart-${i} .heart`).attr("src", `heart/heart${i}_${heart_img}.svg`);
-        }
-    }
-
-    if (!condition) {
-        // animation of popping heart
-        setTimeout(() => {
-            $(`#heart-${nLife} .heart`).addClass("heart-animation");
-        }, delay);
-        setTimeout(cloud_effect, delay + 400);
-        setTimeout(() => {
-            $(`#heart-${nLife} .heart`).removeClass("heart-animation");
-            switch_class($(`#heart-${nLife}`), "visible", "hidden");
-            nLife--;
-        }, delay+ 500);
-    }
-
-    // changing text in ending page
-    if (eval(`matrix[nRoom][nPage].feedback.${comment}`) === "array") {
-        // from the array of generic comments
-        $(`#ending-game .ending-game-title`).text(eval(`arr_${comment}_feedback[${comment}_num]`));
-    } else {
-        // specific comments
-        $(`#ending-game .ending-game-title`).text(eval(`matrix[nRoom][nPage].feedback.${comment}`));
-    }
-    // adding to the appropriate counter
-    eval(`${comment}_num++`);
-
-    // moving one step in lesson map
-    switch_class($("#controls"),"none", "flex" );
-    switch_class($(`#lesson-map-${nRoom}`), "none", "flex");  
-    move_lessonMap(topic_distance);
-    // removing game from the array
-    matrix[nRoom].splice(nPage , 1);
+    // changes room counter
+    nRoom = Number(button.attr("id").slice(-1)); 
+    // display room
+    $(`#room-${nRoom}`).css("display", "block");
+    setTimeout(toggle_room, 2000); 
     // shows next page
-    setTimeout(() => {
-        // hide end-game general page
-        $(`#ending-game`).css("display", "none");
-        switch_class($("#spinning-flex"), "flex", "none");
-        // hide hearts
-        switch_class($(`#hearts-flex`), "flex", "none");
-        // show back and prev
-        if (matrix[nRoom][nPage].type === "content") {
-            switch_class($("#controls .control-button"),"hidden" ,"visible");
-        }
-        $(".topic").css("pointer-events", "auto");
-        // end of game
-        if (nLife === 0) {
-            // this is the first life test for this room
-            if (mat_questions_bank[nRoom - 1].length !== 6) {
-                finish_story("life");
-            }
-            // user can't do 2 test life
-            // user failed the room
-            else {
-                finish_story("finish");
-            }
-        } else {
-            movePage();
-        }
-    }, delay + 2000);
+    setTimeout(movePage, 2000); 
+    check_room(); 
+  });
 }
 
-// fog cloud hearts effect
-cloud_effect = () => {
-    switch_class($(`#heart-${nLife} .cloud`), "none", "block");
-    setTimeout(() => {
-      switch_class($(`#heart-${nLife} .cloud`), "block", "none");
-    }, 50);
-}
-
-// reveals "story-finish" div
-finish_story = (type) => {
-    // display finish-story general page
-    $(`#finish-story`).css("display", "block");
-    switch_class($("#spinning-flex"), "none", "flex");
-    switch_class($("#controls .control-button"),"visible","hidden");
-
-    $(".topic").css("pointer-events", "none");  
-    switch (type) {
-        case 'life':
-            switch_class($("#finish-story .button-flex"), "none", "flex");
-            switch_class($("#controls"),"none", "flex");
-            switch_class($(`#lesson-map-${nRoom}`), "none", "flex");
-          break;
-        // ending game completely and refreshing room
-        case 'finish':
-            switch_class($("#finish-story .button-flex"), "flex", "none");
-            switch_class($("#controls"), "flex" ,"none");
-            // see the finish-story screen for 2.5 secondes
-            setTimeout(() => {
-                // hide finish-story general page
-                $(`#finish-story`).css("display", "none");
-                switch_class($("#spinning-flex"), "flex", "none");
-                switch_class($("#controls .control-button"), "hidden", "visible");
-                switch_class($(`#lesson-map-${nRoom}`), "flex", "none");
-                $(".topic").css("pointer-events", "auto");
-                restart();
-            }, 2500);
-          break;
+// function that adds events listeners to buttons that affects the page's display- called only one time for each button
+function pop_buttons(button, number) {
+  button.on("click", function() {
+    hidePage();
+    if ((matrix[nRoom][nPage].type !== undefined) && (matrix[nRoom][nPage].type !== "quiz")) {
+      if ($(`#lesson-map-${nRoom} .topic-${topic_counter}`).css("background-image").includes("normal")) {
+        checkpoint(true);
+        }
+    } else if (matrix[nRoom][nPage].type === "quiz") {
+      question_counter = question_counter + eval(number);
     }
+    // changes page counter
+    // if the button is prev/next/about (ect), the number is added to page counter
+    if (button.hasClass("move")) {
+      nPage = nPage + eval(number);
+      // lessom map movememt (ahami head)
+        // if the topic changes whem moving page (there are pages with the same topic)
+        // after a game the topic is equal to the content topic and there is no need to change
+        if ((matrix[nRoom][nPage].topic !== undefined) && (topic_counter !== matrix[nRoom][nPage].topic)) {
+          move_lessonMap(topic_distance * number);
+        }
+    }
+    // if the button is part of the lesson map, page counter is compared to the number 
+    else if (button.hasClass("topic")) {
+      nPage = eval(number);
+      // lessom map movememt (ahami head)
+        move_lessonMap(topic_distance * (matrix[nRoom][nPage].topic - topic_counter));
+    }
+    // shows next page
+    movePage();    
+  });
 }
 
-pop_restart_button = () => {
-    $("#restart-button").on("click", function() {
-        // hide finish-story general page
-        $(`#finish-story`).css("display", "none");
-        switch_class($("#spinning-flex"), "flex", "none");
-        switch_class($("#controls .control-button"), "hidden", "visible");
-        restart();
-    });
+// function that is called every time going in to new room to start from stratch
+check_room = () => {
+  // hearts
+  nLife = 3;
+  for (let i = 1; i <= nLife ; i++) {
+    switch_class($(`#heart-${i}`), "hidden", "visible");
+    $(`#heart-${i} .heart`).attr("src", `heart/heart${i}_happy.svg`);
+  }
+  // lesson map
+  topic_counter = 1;
+  switch (nRoom) {
+    case 1:
+      topic_distance = 14.8;  
+      break;
+    case 2:
+      topic_distance = 5.38;  
+      break;
+    case 3:
+      topic_distance = 8.5;  
+      break;
+    case 4:
+      topic_distance = 4.6;  
+      break;
+    default:
+      topic_distance = 4; 
+  }
+  $("#topic-counter").css("right", "-63.5vw");
+  // comments array
+  correct_num = 0;
+  incorrect_num = 0;
 }
 
-pop_quiz_button = () => {
-    $("#quiz-button").on("click", function() {
-        matrix[nRoom].splice(nPage, 0, 
-            {
-            // question 1
-            divName: ["q1"],
-            functions: [`first_question()`, `switch_class($("#next-button"), "hidden", "visible")`, `switch_class($("#back-button"), "visible", "hidden")`],
-            type: "quiz",
-            questionType: "life"
-            },                        
-            {
-            // question 2
-            divName: ["q2"],
-            functions: [`switch_class($("#back-button"), "hidden", "visible")`],
-            type: "quiz",
-            questionType: "life"
-            },
-            {
-            // quest
-            divName: ["q3"],
-            functions: [`switch_class($("#next-button"), "visible", "hidden")`],
-            type: "quiz",
-            questionType: "life"
-            }
-        );
-        $(`#finish-story`).css("display", "none");
-        switch_class($("#spinning-flex"), "flex", "none");
-        switch_class($("#controls .control-button"), "hidden", "visible");
-        switch_class($("#controls"), "flex" ,"none");
-        switch_class($(`#lesson-map-${nRoom}`), "flex", "none");
-        $(".topic").css("pointer-events", "auto");  
-        movePage();
-    });
-}
 
-// called when the user loses the game
-V_X = (condition) => {
-    // hide timer
-    switch_class($("#timer"), "block", "none");
-    let v_x;
-    let comment;
-    let ahami;
-    // if the user has won
+// colors checkpoint if needed
+checkpoint = (condition) => {
+  let curr_checkpoint = $(`#lesson-map-${nRoom} .topic-${topic_counter}`);
+  // if the checkpoint haven't been changed
+  // if (curr_checkpoint.css("background-image").includes("normal")) {
+    // if this is a content page or the user succeded in a game
     if (condition) {
-        v_x = $("#v");
-        comment = "correct";
-        ahami = "happy";
+      curr_checkpoint.css("background-image", `url("2content/checkpoint_right.svg")`);
+      // changing ahami little head to happy
+      if ($("#topic-counter").attr("src") === "2content/head_sad.svg") {
+        $("#topic-counter").attr("src", "2content/head_happy.svg")
+      }
     }
-    // if the user lost
+    // the user lost the game
     else {
-        v_x = $("#x");
-        comment = "incorrect";
-        ahami = "sad";
+      curr_checkpoint.css("background-image", `url("2content/checkpoint_wrong.svg")`);
+      // changing ahami little head to sad
+      if ($("#topic-counter").attr("src") === "2content/head_happy.svg") {
+        $("#topic-counter").attr("src", "2content/head_sad.svg")
+      }
     }
-    switch_class(v_x, "none", "block");
-    $(`#${matrix[nRoom][nPage].divName} .instructions`).text(eval(`matrix[nRoom][nPage].instructions_feedback.${comment}`));
-    $(`#${matrix[nRoom][nPage].divName} .ahami-head`).attr("src", `2content/head_${ahami}.svg`);
+    // the checkpoint is clickable
+    if (!curr_checkpoint.hasClass("button")) {
+      pop_buttons(curr_checkpoint, nPage);
+      curr_checkpoint.addClass("button");
+    }
+}
 
-    setTimeout(() => {
-        switch_class(v_x, "block", "none");
-        $(".item").css("pointer-events", "auto");
-        endingGame(condition);
-    }, 2000);
-} 
+// moves ahami lesson map head- after moving topic and after every game
+move_lessonMap = (distance) => {
+  // change lesson map head place
+  $("#topic-counter").animate({right: `+=${distance}vw`}, 1000);
+  // update topic counter
+  if (matrix[nRoom][nPage].type === "game") {
+    topic_counter++;
+  } else {
+    topic_counter = matrix[nRoom][nPage].topic;
+  }
+}
 
-// time out- the game is over
-pop_timeEnds = () => {
-    // event listener for ending timer animation
-    document.querySelector("#time-timeline").addEventListener("animationend", () => {
-        V_X(false);
-        b_timer = false;
+// display/hides room image (every room start and with the room button)
+toggle_room = ()  => {
+  let room_div = $(`#room-${nRoom}`);
+  // display the room
+  if (room_div.css("display") === "none") {
+    room_div.css("display","block");
+    room_div.animate({opacity: `1`}, 500);
+  }
+  // hide the room
+  else {
+    room_div.animate({opacity: `0`}, 500, function() {
+    room_div.css("display","none");
     });
+  }
 }
 
-// adding hover and down state to objects
-// in order the function will work the items need to have the class "state"
-pop_hover_down = () => {
-    let src;
-    $(`#${matrix[nRoom][nPage].divName} .state`).on({
-        // hover state
-        mouseenter: function () {
-            src = $(this).attr("src");
-            src= src.slice(0, -4);
+// when clicking on attach sign
+pop_attach = ()  => {
+  $(".attach").on("click", function() {
+    // darken page
+    $("#black-div").css("display", "block");
+    if (!$(this).hasClass("visited")) {
+      $(this).addClass("visited");
+    }
+    // display files
+    for (let j = 0; j < matrix[nRoom][nPage].attach[$(this).attr("class").split(/\s+/)[2].slice(-1) - 1].length; j++) {
+      $("#scroll-div").append(`<img class="attach-file" src="files/${matrix[nRoom][nPage].divName[0]}/${matrix[nRoom][nPage].attach[$(this).attr("class").split(/\s+/)[2].slice(-1) - 1][j]}.svg">`);
+    }
 
-            $(this).attr("src", `${src}_hover.svg`);
-        },
-        mouseleave: function () {
-            $(this).attr("src", `${src}.svg`);
-        },
-        // down state
-        mousedown: function () {
-            $(this).attr("src", `${src}_down.svg`);
-        }
-    });
+    if ($(`#${matrix[nRoom][nPage].divName} .attach.visited`).length === matrix[nRoom][nPage].attach.length) {
+      switch_class($("#next-button"), "hidden", "visible");
+    }
+  });
+
+  $("#scroll-back-button").on("click", function() {
+     $("#black-div").css("display", "none");
+     $("#scroll-div").html("");
+  });
 }
 
-// general games
-
-// called to add to each item event listener to click_identify
-// in order the function will work the items need to have the class "item"
-// r1p3 r2p11 r2p16 r3p2 r3p4
-pop_click = () => {
-    // add event listener for each item
-    $(`#${matrix[nRoom][nPage].divName} .item`).on("click", (event) => {
-        click_identify($(event.target));
-    }); 
+// setting content page
+type_content = () => {
+  // display controls
+  switch_class($("#controls"), "none", "flex");
+  switch_class($(`#lesson-map-${nRoom}`), "none", "flex");
+  
+  if (matrix[nRoom][nPage].attach !== undefined) {
+    // if the user havent visited the room yet
+    // the next button is blocked until whole the attached buttons are clicked
+    if ($(`#${matrix[nRoom][nPage].divName} .attach.visited`).length !== matrix[nRoom][nPage].attach.length) {
+      switch_class($("#next-button"), "visible", "hidden");
+    }
+  } else if (matrix[nRoom][nPage] !== matrix[nRoom][matrix[nRoom].length - 1]) {
+     switch_class($("#next-button"), "hidden", "visible");
+  }
 }
 
-// game of clicking on items (clicking on wrong item is disqulification)
-// the parameter is the clicked item
-// r1p3 r2p11 r2p16 r3p2 r3p4
-click_identify = (item) => {
-    // if the user clicked correct item
-    if ((item).hasClass("correct")) {
-        window[matrix[nRoom][nPage].divName + "_clicked_correct"](item);
-    }
-    // if the user clicked incorrect item, the game is over
-    else {
-        V_X(false);
-        $(`#${matrix[nRoom][nPage].divName} .item`).css("pointer-events", "none");
-    }
+pop_home_page_button = () => {
+  $("#controls .home-page-button").on("click", function() {
+    hidePage();
+    homePage();
+  });
 }
 
-
-// called to add to drop and drag
-// in order the function will work the items need to have the class "drag" and "drop"
-//r1p7 r1p10 r2p8
-pop_drag_drop = () => {
-    $(`#${matrix[nRoom][nPage].divName} .drag`).draggable({
-        revert:"invalid",
-        revertDuration: 200,
-        containment: "window",
-        drag: function(event, ui) {
-            if (matrix[nRoom][nPage].divName.includes("r4p17")) {
-                $("#key").css("transform", "rotate3d(0, 1 ,0, 0deg)");
-            }
-        }
-    }).css("position", "absolute");
-
-    for (let i = 1; i <= $(`#${matrix[nRoom][nPage].divName} .drop`).length; i++) {
-        $(`#${matrix[nRoom][nPage].divName} .drop-${i}`).droppable({
-            tolerance: "intersect",
-            drop: function(event, ui) {
-                //dropped correct
-                if (ui.draggable.hasClass(`drag-${i}`)) {
-                    window[matrix[nRoom][nPage].divName + "_dropped_correct"](ui.draggable, $(this));
-                }
-                //dropped incorrect
-                else {
-                    V_X(false);
-                }
-            }
-        });
-    }
+// before using this function there is need to call hidePage()
+// sends the user to home page
+homePage = () => {
+  // hide previous lesson map
+  switch_class($(`#lesson-map-${nRoom}`), "flex", "none");
+  nRoom = 0;
+  nPage = 0;
+  movePage();
+  switch_class($("#controls"), "flex", "none");
+  // ahami head happy
+  if ($("#topic-counter").attr("src") === "2content/head_sad.svg") {
+    $("#topic-counter").attr("src", "2content/head_happy.svg")
+  }
+  for (let i = 1; i <= 4; i++) {
+    pop_room_buttons($(`#room-button-${i}`));
+}
 }
 
-// r1p7 r2p8 r2p16
-restart_item = (page) => {
-    window[`counter_${page}_items_order`] = 0;
-    window[`arr_${page}_items_order`] = [];
-        // new items order
-        for (let i = 0; i < $(`#${page} .item`).length ; i++) {
-            let random = Math.floor(Math.random() * $(`#${page} .item`).length) + 1;
-            while (window[`arr_${page}_items_order`].includes(random)) {
-                random = Math.floor(Math.random() * $(`#${page} .item`).length) + 1;
-            }
-            window[`arr_${page}_items_order`][i] = random;
-        }
-        // items dissappear accept from the first
-        for (let i = 1; i <= $(`#${page} .item`).length ; i++) {
-            // hide all except from the first item
-            if (i !== window[`arr_${page}_items_order`][0]) {
-                switch_class($(`#${page} .item.data-num-${i}`), "block", "none");
-            } else {
-                switch_class($(`#${page} .item.data-num-${i}`), "none", "block");
-            }
-        }
+pop_watch_room_button = () => {
+  $("#watch-room-button").on("click", function() {
+    toggle_room();
+    // display back button (when entering new room there is no back button, therefore it is in separated tag in HTML)
+    setTimeout(switch_class, 500, $("#back-room-button"), "none", "block");
+    switch_class($("#controls"), "flex", "none"); 
+  });
+  $("#back-room-button").on("click", function() {
+    toggle_room();
+    switch_class($("#back-room-button"), "block", "none");
+    setTimeout(switch_class, 500, $("#controls"), "none", "flex");
+  });
 }
 
-// r1p10 r2p13 r4p11
-restart_trash_drag = (page) => {
-    // not including r4p11 because it is not drag
-    if ($(`#${page} .item`).hasClass("drag")) {
-        window[`counter_${page}_folder`] = 0;
-        window[`counter_${page}_trash`] = 0;
-        $(`#${page} .drag`).css({width: "10.5vw"});
-        switch_class($(`#${page} .drag-1`), "none", "block");
-    }
+// function that switches classes
+switch_class = (object, prevClass, currClass) => {
+  if (object.hasClass(prevClass)) {
+    object.removeClass(prevClass);
+    object.addClass(currClass);
+  }
+}	
 
-    // new files order
-    for (let i = 0; i < eval(`arr_${page}_files_order`).length ; i++) {
-        eval(`arr_${page}_files_order`)[i].used = false;
+restart = () => {
+  // can't reset matrix after resetting nRoom and nPage
+  // can't reset matrix before resetting nRoom and nPage because it messes the page's order
+  // let nPrevRoom = nRoom;
+  hidePage();
+  // return games and questions to matrix
+  matrix.splice(nRoom, 1, window[`Arr_${nRoom}`].slice());
+  // return questions to questions' matrix
+  mat_questions_bank.splice(nRoom - 1, 1, copy(window[`arr_questions_bank_${nRoom}`]));
+  // specific games
+  eval(`restart_${nRoom}()`);
+  // lesson map
+  $(`#lesson-map-${nRoom} .topic`).css("background-image", "url('2content/checkpoint_normal.svg')");
+  $(`.ahami-head, #topic-counter`).attr("src", `2content/head_happy.svg`);
+
+  // home page
+  //nRoom = 0 nPage = 0
+  homePage();
+
+  // games general
+  $(`.item`).css("pointer-events", "auto");
+  // $(`.drag`).draggable({
+  //   revert:"invalid",
+  //   revertDuration: 200,
+  //   containment: "window",
+  //   drag: function(event, ui) {}
+  // }).css("position", "absolute");
+
+  // $(`.drag`).forEach((drag) => {
+  //   if ($(drag).is('.ui-draggable')) {
+  //     $(drag).draggable("option", "disabled", false);
+  //   }
+  // });
+
+  $(`.drag`).each(function(index, drag) {
+    if ($(drag).is('.ui-draggable')) {
+      $(drag).draggable("option", "disabled", false);
     }
-    for (let i = 0; i < eval(`arr_${page}_files_order`).length ; i++) {
-        let random = Math.floor(Math.random() * eval(`arr_${page}_files_order`).length);
-        while (eval(`arr_${page}_files_order`)[random].used) {
-            random = Math.floor(Math.random() * eval(`arr_${page}_files_order`).length);
-        }
-        $(`#${page} .file.data-num-${i + 1}`).css({top: eval(`arr_${page}_files_order`)[random].top, left: eval(`arr_${page}_files_order`)[random].left, transform: eval(`arr_${page}_files_order`)[random].transform});
-        eval(`arr_${page}_files_order`)[random].used = true;
+  });
+
+  $(`.slider`).each(function(index, slider) {
+    if (typeof $(slider).slider() !== "undefined") {
+      $(slider).slider("enable");
     }
+  });
+
+  $(document).off();
 }
 
-// check = what u want to check' for example slider
-enter = (check) => {
-    $(document).keypress(function(e){
-        // if the user clicked enter
-        if (e.which === 13) {
-            // calling slider function for specific page
-            eval(matrix[nRoom][nPage].divName + "_check_" + check + "()");
-        }
-    });
+pop_home_button = () => {
+  $("#home-button").on("click", function() {
+    $("#ending-lomda").css("display", "none");
+    switch_class($("#spinning-flex"), "flex", "none");
+  });
 }
 
-// builds a matrix contains information about game objects' location and movement
-// r2p4 r4p7
-pop_build_mat = () => {
-    let width = eval(`width_${matrix[nRoom][nPage].divName}`);
-    let length= eval(`length_${matrix[nRoom][nPage].divName}`);
-    let mat = eval(`mat_${matrix[nRoom][nPage].divName}`);
-    // create empty arrays
-    for (let i = 0; i <= length - 1; i++) {
-        mat[i] = [];
-    }
-    // fill the arrays
-    for (let i = 0; i < length - 1; i++) {
-        // left wall
-        mat[i][0] = "SAFETY_WALL";
-        for (let j = 1; j < width - 1; j++) {
-            // middle
-            mat[i][j] = "EMPTY";
-        }
-        // right wall
-        mat[i][width - 1] = "SAFETY_WALL";
-    }
-    // fill the floor with safety wall
-    for (let i = 0; i <= width - 1; i++) {
-        mat[length - 1][i] = "SAFETY_WALL"
-    }
-    eval(`${matrix[nRoom][nPage].divName}_build_mat()`);
+// the user finished all rooms
+// display games
+the_end = () => {
+  homePage();
+  $("#ending-lomda").css("display", "block");
+  switch_class($("#spinning-flex"), "none", "flex");
+  let final_grade = 0;
+  for (let i = 1; i <= arr_marks.length; i++) {
+    $(`#grade-${i}`).html(String(arr_marks[i - 1]));
+    final_grade += arr_marks[i - 1];
+  }
+  final_grade = final_grade/arr_marks.length;
+  $("#total-score").html(String(final_grade));
+  $(`#grade-print`).html(`ציון: ${String(final_grade)}`);
 }
 
-let x_position = 3;
-let y_position = 0;
-let falling_item;
-
-// generic function for games with falling items controled by keyboard's arrows
-falling_items = (distance) => {
-    //let data_num = eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].data_num;
-    //falling_item = $(`#${matrix[nRoom][nPage].divName} .item.data-num-${eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].data_num}`);
-    setTimeout(show_keyboard, 1000, keyboard_blinks);
-    setTimeout(function() {
-        falling_items_keyboard(distance);
-        falling_items_down(distance);
-    } ,3000);
-    
+// text css opening
+function pop_calculateStrokeTextCSS(steps) {
+  var css = "";
+  for (var i = 0; i < steps; i++) {
+    var angle = (i * 2 * Math.PI) / steps;
+    var cos = Math.round(10000 * Math.cos(angle)) / 10000;
+    var sin = Math.round(10000 * Math.sin(angle)) / 10000;
+    css +=
+      "calc(var(--stroke-width) * " +
+      cos +
+      ") calc(var(--stroke-width) * " +
+      sin +
+      ") 0 var(--stroke-color),";
+  }
+  return css;
 }
 
-// moving down
-falling_items_down = (distance) => {
-    let falling_item = $(`#${matrix[nRoom][nPage].divName} .item.data-num-${eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].data_num}`);
-    falling_item.css("left", `${eval(`${matrix[nRoom][nPage].divName}_first_location`) + (x_position - 1) * (distance)}vw`);
-    switch_class(falling_item, "none", "block");
-    // the item is not collapsing the floor
-    if (eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position + 1][x_position] !== "SAFETY_WALL") {
-        // if the item collapsing a square
-        if (eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position + 1][x_position].includes(`SQUARE`)) {
-            // if the square matches the item
-            if (eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position + 1][x_position] === `SQUARE_${eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].data_num}`) {
-                eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position][x_position] = "EMPTY";
-                falling_item.animate({top: `+=3vw`}, eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].velocity);
-                eval(`${matrix[nRoom][nPage].divName}_match_square(falling_item)`);
-                // remove item from the array
-                eval(`${matrix[nRoom][nPage].divName}_falling_order`).shift();
-                // finish game
-                if (eval(`${matrix[nRoom][nPage].divName}_falling_order`).length === 0) {
-                    V_X(true);
-                    $(document).off("keydown");
-                    x_position = 3;
-                    y_position = 0;
-                } 
-                // reveal another item
-                else {
-                    // random number between 1-4
-                    if (matrix[nRoom][nPage].divName.includes("r2p4")) {
-                        x_position = Math.floor(Math.random() * (eval(`width_${matrix[nRoom][nPage].divName}`)-2)) + 1;
-                    } else if (matrix[nRoom][nPage].divName.includes("r4p7")) {
-                        x_position = 3; 
-                    }  
-                    y_position = 0;
-                    setTimeout(falling_items_down, `${matrix[nRoom][nPage].divName}_falling_order`[0].velocity, distance);
-                }
-            } 
-            // wrong square
-            else {
-                eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position][x_position] = "EMPTY";
-                V_X(false);
-                x_position = 3;
-                y_position = 0;
-            }
-        }
-        // move the item down
-        else {
-            eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position][x_position] = "EMPTY";
-            y_position += 1;
-            eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position][x_position] = `ITEM-${eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].data_num}`;
-            falling_item.animate({top: `+=3vw`}, 100);
-            setTimeout(falling_items_down, eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].velocity, distance);
-        }
-    }
-    // the item collapsed the floor
-    else {
-        V_X(false);
-        x_position = 3;
-        y_position = 0;
-    }
-}
-
-// distance = (num)vw
-// moving left/right
-falling_items_keyboard = (distance) => {
-    $(document).keydown(function(e) {
-        if ((e.which === 37 || e.which === 39) && (eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position][x_position + e.which - 38] !== "SAFETY_WALL")){
-            eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position][x_position] = "EMPTY";
-            x_position += e.which - 38;
-            $(`#${matrix[nRoom][nPage].divName} .item.data-num-${eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].data_num}`).animate({left: `+=${(distance) * (e.which - 38)}vw`}, 100);
-            eval(`mat_${matrix[nRoom][nPage].divName}`)[y_position][x_position] = `ITEM-${eval(`${matrix[nRoom][nPage].divName}_falling_order`)[0].data_num}`;
-        }
-    });
-}
-
-// shows blinking keyboard to help the user understand the instructions
-const keyboard_blinks = 4;
-show_keyboard = (keyboard_blink) => {
-    if (keyboard_blink === 0) {
-        switch_class($("#keyboard"), "block", "none");
-    } else {
-        if (keyboard_blink === keyboard_blinks) {
-            switch_class($("#keyboard"), "none", "block");
-        } else if (keyboard_blink % 2 === 0) {
-            $("#keyboard").attr("src", "exer5/keyboard_normal.svg");
-        } else if (keyboard_blink % 2 !== 0) {
-            $("#keyboard").attr("src", "exer5/keyboard_blink.svg");
-        }
-        setTimeout(show_keyboard, 400, keyboard_blink - 1);
-    }
-}
-
-// // item must have class carousel-item
-// // arrows must have class arrow-left and arrow-right
-// let carousel_count;
-// let carousel_current_item;
-// carousel = (event) => {
-//     let arr_carousel_items = $(`#${matrix[nRoom][nPage].divName} .carousel-item`);
-//     if(!event){ // first time in the function
-//         carousel_count = 0;
-//         $(`.arrows`).on("click", carousel);
-//     } else { // come from arrows 
-//         // check which arrow and adjust count
-//         if($(event.target).hasClass("arrow-right")) {
-//             carousel_count--;
-//             if (Number(carousel_count) === -1) {
-//                 carousel_count = arr_carousel_items.length - 1;
-//             }
-//         } else if($(event.target).hasClass("arrow-left")) {
-//             carousel_count++;
-//             if (Number(carousel_count) === arr_carousel_items.length) {
-//                 carousel_count = 0;
-//             }
-//         }
-//     }
-//     switch_class($(carousel_current_item), "visible", "hidden"); // hide privious element
-//     carousel_current_item = arr_carousel_items[carousel_count]; // save current element
-//     switch_class($(carousel_current_item), "hidden", "visible"); // show current element
-// }
-
-// item must have class carousel-item
-// arrows must have class arrow-left and arrow-right
-let carousel_num;
-let carousel_count;
-pop_carousel = (event) => {
-    if(!event){ // first time in the function
-        for (let i = 1; i <= $(`.carousel`).length; i++) {
-           window[`${matrix[nRoom][nPage].divName}_carousel_count_${i}`] = 0;
-        }
-    } else { // come from arrows 
-        // check which arrow and adjust count
-        // carousel number (there are 4)
-        carousel_num = $(event.target).parent().prop('id').slice(-1);
-        // easy to read
-        carousel_count = window[`${matrix[nRoom][nPage].divName}_carousel_count_${carousel_num}`];
-        // hide prev item
-        switch_class($($(`#${matrix[nRoom][nPage].divName} #carousel-${carousel_num} .carousel-item`)[carousel_count]), "visible", "hidden");
-        if($(event.target).hasClass("arrow-right")) {
-            carousel_count--;
-            if (carousel_count === -1) {
-                carousel_count = $(`#${matrix[nRoom][nPage].divName} #carousel-${carousel_num} .carousel-item`).length - 1;
-            }
-        } else if($(event.target).hasClass("arrow-left")) {
-            carousel_count++;
-            if (carousel_count === $(`#${matrix[nRoom][nPage].divName} #carousel-${carousel_num} .carousel-item`).length) {
-                carousel_count = 0;
-            }
-        }
-        switch_class($($(`#${matrix[nRoom][nPage].divName} #carousel-${carousel_num} .carousel-item`)[carousel_count]), "hidden", "visible");
-        // update
-        window[`${matrix[nRoom][nPage].divName}_carousel_count_${carousel_num}`] = carousel_count;
-    }
+function copy(o) {
+  var output, v, key;
+  output = Array.isArray(o) ? [] : {};
+  for (key in o) {
+      v = o[key];
+      output[key] = (typeof v === "object") ? copy(v) : v;
+  }
+  return output;
 }
