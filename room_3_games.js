@@ -23,7 +23,7 @@ r3p4_clicked_correct = (item) => {
         exer_12_click_count++;
         // if chair change background
         if(clicked_item === "chair") {
-            $(`#r3p4`).css("background-image", `url("assets/media/exer12/exer12_bg_chair.svg")`);  
+            $(`#r3p4`).css("background-image", `url("exer12/exer12_bg_chair.svg")`);  
         }
     }
     // check for win
@@ -82,7 +82,7 @@ restart_3 = () => {
             switch_class($(clicked_item[i]), "opic", "transparent");
             // if chair change background
             if(clicked_item[i].classList[0] === "chair") {
-                $(`#r3p4`).css("background-image", `url("assets/media/exer12/exer12_bg_empty.svg")`);  
+                $(`#r3p4`).css("background-image", `url("exer12/exer12_bg_empty.svg")`);  
             }
         }
     }
