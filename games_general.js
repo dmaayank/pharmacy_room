@@ -51,9 +51,9 @@ endingGame = (condition) => {
     // hearts
     switch_class($(`#hearts-flex`), "none", "flex");
     // heart images- switch from happy to sad and the opposite
-    if ($(`#heart-1 .heart`).attr("src") !== `assets/media/heart/heart1_${heart_img}.svg`) {
+    if ($(`#heart-1 .heart`).attr("src") !== `heart/heart1_${heart_img}.svg`) {
         for (let i = 1; i <= nLife ; i++) {
-            $(`#heart-${i} .heart`).attr("src", `assets/media/heart/heart${i}_${heart_img}.svg`);
+            $(`#heart-${i} .heart`).attr("src", `heart/heart${i}_${heart_img}.svg`);
         }
     }
 
@@ -222,7 +222,7 @@ V_X = (condition) => {
     }
     switch_class(v_x, "none", "block");
     $(`#${matrix[nRoom][nPage].divName} .instructions`).text(eval(`matrix[nRoom][nPage].instructions_feedback.${comment}`));
-    $(`#${matrix[nRoom][nPage].divName} .ahami-head`).attr("src", `assets/media/2content/head_${ahami}.svg`);
+    $(`#${matrix[nRoom][nPage].divName} .ahami-head`).attr("src", `2content/head_${ahami}.svg`);
 
     setTimeout(() => {
         switch_class(v_x, "block", "none");
@@ -506,9 +506,9 @@ show_keyboard = (keyboard_blink) => {
         if (keyboard_blink === keyboard_blinks) {
             switch_class($("#keyboard"), "none", "block");
         } else if (keyboard_blink % 2 === 0) {
-            $("#keyboard").attr("src", "assets/media/exer5/keyboard_normal.svg");
+            $("#keyboard").attr("src", "exer5/keyboard_normal.svg");
         } else if (keyboard_blink % 2 !== 0) {
-            $("#keyboard").attr("src", "assets/media/exer5/keyboard_blink.svg");
+            $("#keyboard").attr("src", "exer5/keyboard_blink.svg");
         }
         setTimeout(show_keyboard, 400, keyboard_blink - 1);
     }
