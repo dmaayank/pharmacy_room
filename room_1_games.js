@@ -97,7 +97,7 @@ r1p10_dropped_correct = (drag, drop) => {
         });
     } else if (drop.hasClass("trash")) {
         window[`counter_${matrix[nRoom][nPage].divName}_trash`]++;
-        drag.attr("src", `assets/media/exer3/pieceofshit${eval(`counter_${matrix[nRoom][nPage].divName}_trash`)}.svg`);
+        drag.attr("src", `exer3/pieceofshit${eval(`counter_${matrix[nRoom][nPage].divName}_trash`)}.svg`);
         drag.css("width", "7vw");
     }
     // winning
@@ -120,6 +120,6 @@ restart_1 = () => {
 
     // r1p10
     restart_trash_drag("r1p10");
-    $("#r1p10 .data-num-2.drag-2").attr("src", `assets/media/exer3/exer3_bikurofe.svg`);
-    $("#r1p10 .data-num-6.drag-2").attr("src", `assets/media/exer3/exer3_kabala.svg`);
+    $("#r1p10 .data-num-2.drag-2").attr("src", `exer3/exer3_bikurofe.svg`);
+    $("#r1p10 .data-num-6.drag-2").attr("src", `exer3/exer3_kabala.svg`);
 }
