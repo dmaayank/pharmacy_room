@@ -1,6 +1,6 @@
 r4p2_clicked_correct = (item) => {
     $(`#${matrix[nRoom][nPage].divName} .item`).css("pointer-events", "none");
-    $("#switch").attr("src", "assets/media/exer15/exer15_switch_on.svg");
+    $("#switch").attr("src", "exer15/exer15_switch_on.svg");
     $("#wind").animate({height: `28vh`}, 500, function() {
         if (b_timer) {
             V_X(true);
@@ -234,7 +234,7 @@ r4p19_check_slider = () => {
 restart_4 = () => {
     // r4p2
     $("#wind").css("height", "0vh");
-    $("#switch").attr("src", "assets/media/exer15/exer15_switch_off.svg");
+    $("#switch").attr("src", "exer15/exer15_switch_off.svg");
 
     // r4p5
     restart_item("r4p5");
