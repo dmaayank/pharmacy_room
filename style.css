@@ -1,18 +1,18 @@
 /* general */
 @font-face {
   font-family: nehama;
-  src: url(assets/fonts/nehama-webfont.ttf), url(assets/fonts/nehama-webfont.eot);
+  src: url(fonts/nehama-webfont.ttf), url(fonts/nehama-webfont.eot);
 }
 
 @font-face {
   font-family: Rubik;
-  src: url(assets/fonts/Rubik-Regular.ttf);
+  src: url(fonts/Rubik-Regular.ttf);
   font-weight: 500;
 }
 
 @font-face {
   font-family: Rubik-Bold;
-  src: url(assets/fonts/Rubik-Bold.ttf);
+  src: url(fonts/Rubik-Bold.ttf);
   font-weight: 800;
 }
 
@@ -210,7 +210,7 @@ body, #main {
 }
 
 .notebook {
-  background-image: url("assets/media/2content/content_bg.svg");
+  background-image: url("2content/content_bg.svg");
 }
 
 .title {
@@ -223,12 +223,12 @@ body, #main {
 }
 
 .little-title {
-  background-image: url("assets/media/2content/title_scribble_short.svg");
+  background-image: url("2content/title_scribble_short.svg");
   width: 13vw;
 }
 
 .big-title {
-  background-image: url("assets/media/2content/title_scribble_long.svg");
+  background-image: url("2content/title_scribble_long.svg");
   width: 36.5vw;
 }
 
@@ -238,19 +238,19 @@ body, #main {
 }
 
 #room-1 {
-  background-image: url("assets/media/rooms/room_kabala_bg.svg");
+  background-image: url("rooms/room_kabala_bg.svg");
 }
 
 #room-2 {
-  background-image: url("assets/media/rooms/room_tipulim_bg.svg");
+  background-image: url("rooms/room_tipulim_bg.svg");
 }
 
 #room-3 {
-  background-image: url("assets/media/rooms/room_doctor_bg.svg");
+  background-image: url("rooms/room_doctor_bg.svg");
 }
 
 #room-4 {
-  background-image: url("assets/media/rooms/room_trufot_bg.svg");
+  background-image: url("rooms/room_trufot_bg.svg");
 }
 
 #back-room-button {
@@ -280,7 +280,7 @@ body, #main {
 }
 
 .lesson-map {
-  background-image: url("assets/media/2content/progress.svg");
+  background-image: url("2content/progress.svg");
   width: 66vw;
   height: 4.4vw;
   align-items: center;
@@ -293,39 +293,39 @@ body, #main {
 }
 
 .home-page-button {
-  background-image: url("assets/media/gameover+finish/home_normal.svg");
+  background-image: url("gameover+finish/home_normal.svg");
 }
 
 .home-page-button:hover {
-  background-image: url("assets/media/gameover+finish/home_hover.svg");
+  background-image: url("gameover+finish/home_hover.svg");
 }
 
 .home-page-button:hover {
-  background-image: url("assets/media/gameover+finish/home_down.svg");
+  background-image: url("gameover+finish/home_down.svg");
 }
 
 .watch-room-button {
-  background-image: url("assets/media/2content/map_normal.svg");
+  background-image: url("2content/map_normal.svg");
 }
 
 .watch-room-button:hover {
-  background-image: url("assets/media/2content/map_hover.svg");
+  background-image: url("2content/map_hover.svg");
 }
 
 .watch-room-button:active {
-  background-image: url("assets/media/2content/map_down.svg");
+  background-image: url("2content/map_down.svg");
 }
 
 .back-button {
-  background-image: url("assets/media/2content/back_normal.svg");
+  background-image: url("2content/back_normal.svg");
 }
 
 .back-button:hover {
-  background-image: url("assets/media/2content/back_hover.svg");
+  background-image: url("2content/back_hover.svg");
 }
 
 .back-button:active {
-  background-image: url("assets/media/2content/back_down.svg");
+  background-image: url("2content/back_down.svg");
 }
 
 #back-about-button {
@@ -334,22 +334,22 @@ body, #main {
 }
 
 #next-button {
-  background-image: url("assets/media/2content/next_normal.svg");
+  background-image: url("2content/next_normal.svg");
 }
 
 #next-button:hover {
-  background-image: url("assets/media/2content/next_hover.svg");
+  background-image: url("2content/next_hover.svg");
 }
 
 #next-button:active {
-  background-image: url("assets/media/2content/next_down.svg");
+  background-image: url("2content/next_down.svg");
 }
 
 .topic {
   width: 2vw;
   margin-top: 1vh;
   height: 2vw;
-  background-image: url("assets/media/2content/checkpoint_normal.svg");
+  background-image: url("2content/checkpoint_normal.svg");
 }
 
 .topic .tooltip {
@@ -450,7 +450,7 @@ body, #main {
 }
 
 #finish-story, #ending-lomda {
-  background-image: url("assets/media/gameover+finish/again_radial_bg.svg");
+  background-image: url("gameover+finish/again_radial_bg.svg");
 }
 
 #finish-story .button-flex {
@@ -472,31 +472,31 @@ body, #main {
 }
 
 #quiz-button {
-  background-image: url("assets/media/gameover+finish/test_normal.svg");
+  background-image: url("gameover+finish/test_normal.svg");
   width: 26vw;
   height: 11.3vw;
 }
 
 #quiz-button:hover {
-  background-image: url("assets/media/gameover+finish/test_hover.svg");
+  background-image: url("gameover+finish/test_hover.svg");
 }
 
 #quiz-button:active {
-  background-image: url("assets/media/gameover+finish/test_down.svg");
+  background-image: url("gameover+finish/test_down.svg");
 }
 
 #restart-button {
-  background-image: url("assets/media/gameover+finish/restart_normal.svg");
+  background-image: url("gameover+finish/restart_normal.svg");
   width: 26vw;
   height: 11.55vw;
 }
 
 #restart-button:hover {
-  background-image: url("assets/media/gameover+finish/restart_hover.svg");
+  background-image: url("gameover+finish/restart_hover.svg");
 }
 
 #restart-button:active {
-  background-image: url("assets/media/gameover+finish/restart_down.svg");
+  background-image: url("gameover+finish/restart_down.svg");
 }
 
 .grade-flex {
@@ -551,7 +551,7 @@ body, #main {
 /* ending game */
 
 #ending-game {
-  background-image: url("assets/media/heart/heart_bg.svg");
+  background-image: url("heart/heart_bg.svg");
 }
 
 .ending-game-title {
@@ -646,7 +646,7 @@ body, #main {
 /* opening */
 
 #opening {
-  background-image: url("assets/media/1home/home_bg\ .svg");
+  background-image: url("1home/home_bg\ .svg");
 }
 
 #symbols {
@@ -741,16 +741,16 @@ body, #main {
 }
 
 #room-button-1 {
-  background-image: url("assets/media/1home/room_waiting.svg");
+  background-image: url("1home/room_waiting.svg");
 }
 #room-button-2 {
-  background-image: url("assets/media/1home/room_treatment.svg");
+  background-image: url("1home/room_treatment.svg");
 }
 #room-button-3 {
-  background-image: url("assets/media/1home/room_doctor.svg");
+  background-image: url("1home/room_doctor.svg");
 }
 #room-button-4 {
-  background-image: url("assets/media/1home/room_drugs.svg");
+  background-image: url("1home/room_drugs.svg");
 }
 
 .room-name {
@@ -844,20 +844,20 @@ body, #main {
   height: 2.06vw;
   margin-top: 0.25vw;
   margin-left: 2vw;
-  background-image: url("assets/media/2content/attach_normal.svg");
+  background-image: url("2content/attach_normal.svg");
   cursor: pointer;
 }
 
 .attach:hover {
-  background-image: url("assets/media/2content/attach_hover.svg");
+  background-image: url("2content/attach_hover.svg");
 }
 
 .attach:active{
-  background-image: url("assets/media/2content/attach_down.svg");
+  background-image: url("2content/attach_down.svg");
 }
 
 .attach.visited {
-  background-image: url("assets/media/2content/attach_visited.svg");
+  background-image: url("2content/attach_visited.svg");
 }
 
 .flex-text {
@@ -924,7 +924,7 @@ body, #main {
 /* r1p3 */
 
 #r1p3 {
-  background-image: url("assets/media/exer1/exer1_bg.svg");
+  background-image: url("exer1/exer1_bg.svg");
 }
 
 #r1p3 .items-flex {
@@ -991,7 +991,7 @@ body, #main {
 /* r1p7 */
 
 #r1p7 {
-  background-image: url("assets/media/exer2/bg_wall.svg");
+  background-image: url("exer2/bg_wall.svg");
 }
 
 #r1p7 .boards-flex {
@@ -1042,7 +1042,7 @@ body, #main {
 /* r1p10 */
 
 #r1p10, #r2p13 {
-  background-image: url("assets/media/exer3/exer3bg.svg");
+  background-image: url("exer3/exer3bg.svg");
 }
 
 #r1p10 .ahami-head, #r2p13 .ahami-head, #r4p11 .ahami-head {
@@ -1129,23 +1129,23 @@ body, #main {
 }
 
 .answer.normal {
-  background-image: url("assets/media/test/answer_normal.svg");
+  background-image: url("test/answer_normal.svg");
 }
 
 .answer.normal:hover{
-  background-image: url("assets/media/test/answer_hover.svg");
+  background-image: url("test/answer_hover.svg");
 }
 
 .answer.normal:active{
-  background-image: url("assets/media/test/answer_down.svg");
+  background-image: url("test/answer_down.svg");
 }
 
 .answer.right, .answer.right:hover, .answer.right:active{
-  background-image: url("assets/media/test/answer_right.svg");
+  background-image: url("test/answer_right.svg");
 }
 
 .answer.wrong, .answer.wrong:hover, .answer.wrong:active{
-  background-image: url("assets/media/test/answer_wrong.svg");
+  background-image: url("test/answer_wrong.svg");
 }
 
 .question-counter, .quiz-type {
@@ -1175,7 +1175,7 @@ body, #main {
 /* r2p2 */
 
 #r2p2 {
-  background-image: url("assets/media/exer4/exer04_bg_empty.svg");
+  background-image: url("exer4/exer04_bg_empty.svg");
 }
 
 #r2p2 .instructions-flex {
@@ -1203,7 +1203,7 @@ body, #main {
 #r2p2 .slider-deitem {
   position: relative;
   margin: auto;
-  background-image: url(assets/media/exer4/exer4_bar.svg);
+  background-image: url(exer4/exer4_bar.svg);
   width: 69.8vw;
   height: 12.2vw;
   margin-top: 15vw;
@@ -1250,7 +1250,7 @@ body, #main {
 /* r2p4 */
 
 #r2p4 {
-  background-image: url("assets/media/exer5/exer05_bg.svg");
+  background-image: url("exer5/exer05_bg.svg");
 }
 
 #r2p4 .item {
@@ -1279,7 +1279,7 @@ body, #main {
 /* r2p8 */
 
 #r2p8 {
-  background-image: url("assets/media/rooms/room_tipulim_bg.svg");
+  background-image: url("rooms/room_tipulim_bg.svg");
 }
 
 .side-hands {
@@ -1339,7 +1339,7 @@ body, #main {
 /* r2p11 */
 
 #r2p11, #r4p11 {
-  background-image: url("assets/media/exer7/exer07_bg_wood.svg");
+  background-image: url("exer7/exer07_bg_wood.svg");
 }
 
 #r2p11 .ahami-head {
@@ -1419,7 +1419,7 @@ body, #main {
 /* r2p16
 
 #r2p16 {
-  background-image: url("assets/media/exer9/exer09_bg.svg");
+  background-image: url("exer9/exer09_bg.svg");
 }
 
 #r2p16 .ahami-head {
@@ -1458,7 +1458,7 @@ body, #main {
 /* r2p17 */
 
 #r2p17 {
-  background-image: url("assets/media/exer10/exer10_bg.svg");
+  background-image: url("exer10/exer10_bg.svg");
 }
 
 #r2p17 .items-flex {
@@ -1507,7 +1507,7 @@ body, #main {
 }
 
 #r3p2 {
-background-image: url("assets/media/exer11/exer11_bg.svg");
+background-image: url("exer11/exer11_bg.svg");
 }
 
 #r3p2 .instructions {
@@ -1530,7 +1530,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 
 /* page 4 */
 #r3p4 {
-    background-image: url("assets/media/exer12/exer12_bg_empty.svg");
+    background-image: url("exer12/exer12_bg_empty.svg");
 }
 
 #r3p4 .ahami-head {
@@ -1643,7 +1643,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 
 /* page 9 */
 #r3p9 {
-    background-image: url("assets/media/exer13/exer13_bg.svg");
+    background-image: url("exer13/exer13_bg.svg");
 }
 
 #r3p9 .ahami-head {
@@ -1683,7 +1683,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 /* page 12 */
 
 #r3p12 {
-  background-image: url("assets/media/exer14/exer14_bg.svg");
+  background-image: url("exer14/exer14_bg.svg");
 } 
 
 #r3p12 .ahami-head {
@@ -1737,7 +1737,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 /* page 11 */
 
 #r4p2 {
-  background-image: url("assets/media/exer15/exer15_bg.svg");
+  background-image: url("exer15/exer15_bg.svg");
 }
 
 #r4p2 .ahami-head {
@@ -1768,7 +1768,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 }
 
 #wind {
-  background-image: url(assets/media/exer15/exer15_windgroup.svg);
+  background-image: url(exer15/exer15_windgroup.svg);
   width: 41vw;
   height: 0vh;
   position: absolute;
@@ -1786,7 +1786,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 /* r4p5 */
 
 #r4p5 {
-  background-image: url("assets/media/exer16/exer16_bg.svg");
+  background-image: url("exer16/exer16_bg.svg");
 }
 
 #r4p5 .ahami-head {
@@ -1847,7 +1847,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 /* r4p7 */
 
 #r4p7 {
-  background-image: url("assets/media/exer17/exer17_bg.svg");
+  background-image: url("exer17/exer17_bg.svg");
 }
 
 #r4p7 .ahami-head {
@@ -1939,7 +1939,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 /* r4p14 */
 
 #r4p14 {
-  background-image: url("assets/media/exer19+20/exer19_bg.svg");
+  background-image: url("exer19+20/exer19_bg.svg");
 }
 
 #r4p14 .ahami-head {
@@ -2066,7 +2066,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 /* r4p17 */
 
 #r4p17 {
-  background-image: url("assets/media/exer21/exer21_bg.svg");
+  background-image: url("exer21/exer21_bg.svg");
 }
 
 #lock {
@@ -2129,7 +2129,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 /* r4p19 */
 
 #r4p19 {
-  background-image: url("assets/media/exer22/exer22_bg.svg");
+  background-image: url("exer22/exer22_bg.svg");
 }
 
 #r4p19 .ahami-head {
@@ -2154,7 +2154,7 @@ background-image: url("assets/media/exer11/exer11_bg.svg");
 #r4p19 .slider-conteiner {
   position: relative;
   margin: auto;
-  background-image: url(assets/media/exer22/exer22_meter.svg);
+  background-image: url(exer22/exer22_meter.svg);
   width: 5.3vw;
   height: 34.8vw;
   /* margin-top: 15vw; */
